@@ -10,6 +10,8 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.LayoutManager;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.lang.invoke.ConstantBootstraps;
 
 import javax.swing.Box;
@@ -25,6 +27,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
 
 public class CRUD extends JFrame{
 	
@@ -51,6 +55,8 @@ public class CRUD extends JFrame{
 		pack();
 		setLocation(200,200);
 		
+		System.out.println("Create pressed ");
+		configureInterfaces();
 	}
 	
 	private void addWidgets() {
@@ -115,23 +121,89 @@ public class CRUD extends JFrame{
 		textFieldLastName = new JTextField(lenOfInputChars);
 		textFieldEmail = new JTextField(lenOfInputChars);
 		
-		
-		
+
 		pnlAdd = new JPanel();
 		pnlAdd.setLayout(new GridLayout(0, 2, 10, 10));
 		
-		
-		
-		
+
 		leftPanel = new JPanel();
 		leftPanel.setLayout(new GridLayout(0,1,40,5));
 		
+
+		
+	}
+	
+	private void configureInterfaces() {
+		
+		btnCreate.addActionListener(new onCreateBtn());
+		btnSelect.addActionListener(new onSelectBtn());
+		btnUpdate.addActionListener(new onUpdateBtn());
+		btnDelate.addActionListener(new onCreateBtn());
+	}
+	
+	
+	
+	private class onCreateBtn implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+			System.out.println("Create pressed ");
+		}
+
+
+
+	}
+	private class onSelectBtn implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+			System.out.println("Select pressed ");
+			
+		}
 
 
 		
 	}
 	
-	
-	
+	private class onUpdateBtn implements ActionListener	{
 
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+			System.out.println("Update pressed ");
+			
+		}
+
+
+	}
+	
+	private class onDeleateBtn implements ActionListener	{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+			System.out.println("Delateb pressed ");
+			
+		}
+
+
+
+	}
+	
+	
+	private class nameListener implements CaretListener{
+
+		@Override
+		public void caretUpdate(CaretEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		
+		
+		
+	}
+	
 }
