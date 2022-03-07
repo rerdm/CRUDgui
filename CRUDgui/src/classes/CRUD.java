@@ -2,12 +2,17 @@ package classes;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.LayoutManager;
+import java.lang.invoke.ConstantBootstraps;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,6 +24,7 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
 
 public class CRUD extends JFrame{
 	
@@ -29,8 +35,9 @@ public class CRUD extends JFrame{
 	private JTextField textFieldName,textFieldLastName,textFieldEmail;
 	private JTextArea dbOutput;
 	private JScrollPane scrollTable;
-	private JPanel leftPanel, pnlAdd;
+	private JPanel leftPanel, pnlAdd, pnlButtons;
 	
+	private static final int lenOfInputChars = 10;
 	
 	
 	public CRUD() {
@@ -56,19 +63,23 @@ public class CRUD extends JFrame{
 		
 		// will be set in box-layout container
 		pnlAdd.add(lblName);
+		pnlAdd.add(textFieldName);
 		pnlAdd.add(lblLastName);
-		pnlAdd.add(lblEmail);
-		
-		pnlAdd.add(textFieldEmail);
 		pnlAdd.add(textFieldLastName);
+		pnlAdd.add(lblEmail);
 		pnlAdd.add(textFieldEmail);
 		
 		leftPanel.add(pnlAdd);
-		
+
 		leftPanel.add(btnCreate);
 		leftPanel.add(btnSelect);
 		leftPanel.add(btnUpdate);
 		leftPanel.add(btnDelate);
+		
+
+		pnlAdd.setMaximumSize(pnlAdd.getPreferredSize());
+
+		
 		
 	}
 
@@ -90,9 +101,9 @@ public class CRUD extends JFrame{
 		scrollTable = new JScrollPane(table);
 		
 		
-		lblName = new JLabel();
-		lblLastName = new JLabel();
-		lblEmail = new JLabel();
+		lblName = new JLabel(" Name :");
+		lblLastName = new JLabel(" Last Name :");
+		lblEmail = new JLabel(" Email :");
 		
 		
 		btnCreate = new JButton("CREATE");
@@ -100,15 +111,21 @@ public class CRUD extends JFrame{
 		btnUpdate = new JButton("UPDATE");
 		btnDelate = new JButton("DELETE");
 		
-		textFieldName = new JTextField();
-		textFieldLastName = new JTextField();
-		textFieldEmail = new JTextField();
+		textFieldName = new JTextField(lenOfInputChars);
+		textFieldLastName = new JTextField(lenOfInputChars);
+		textFieldEmail = new JTextField(lenOfInputChars);
+		
+		
 		
 		pnlAdd = new JPanel();
-		pnlAdd.setLayout(new GridLayout(0, 2, 5, 5));
+		pnlAdd.setLayout(new GridLayout(0, 2, 10, 10));
+		
+		
+		
 		
 		leftPanel = new JPanel();
-		leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.PAGE_AXIS));
+		leftPanel.setLayout(new GridLayout(0,1,40,5));
+		
 
 
 		
