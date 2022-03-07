@@ -55,7 +55,6 @@ public class CRUD extends JFrame{
 		pack();
 		setLocation(200,200);
 		
-		System.out.println("Create pressed ");
 		configureInterfaces();
 	}
 	
@@ -113,6 +112,7 @@ public class CRUD extends JFrame{
 		
 		
 		btnCreate = new JButton("CREATE");
+		btnCreate.setEnabled(false);
 		btnSelect = new JButton("SELECT");
 		btnUpdate = new JButton("UPDATE");
 		btnDelate = new JButton("DELETE");
@@ -134,76 +134,17 @@ public class CRUD extends JFrame{
 	}
 	
 	private void configureInterfaces() {
-		
-		btnCreate.addActionListener(new onCreateBtn());
-		btnSelect.addActionListener(new onSelectBtn());
-		btnUpdate.addActionListener(new onUpdateBtn());
-		btnDelate.addActionListener(new onCreateBtn());
-	}
-	
-	
-	
-	private class onCreateBtn implements ActionListener {
 
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			
-			System.out.println("Create pressed ");
-		}
+		btnCreate.addActionListener(new onCreateBtnListener(btnCreate));
+		btnSelect.addActionListener(new onSelectBtnListener(btnSelect));
+		btnUpdate.addActionListener(new onUpdateBtnListener(btnUpdate));
+		btnDelate.addActionListener(new onDelateBtnListner(btnDelate));
 
-
-
-	}
-	private class onSelectBtn implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			
-			System.out.println("Select pressed ");
-			
-		}
-
-
-		
-	}
-	
-	private class onUpdateBtn implements ActionListener	{
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			
-			System.out.println("Update pressed ");
-			
-		}
-
-
-	}
-	
-	private class onDeleateBtn implements ActionListener	{
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			
-			System.out.println("Delateb pressed ");
-			
-		}
-
-
-
-	}
-	
-	
-	private class nameListener implements CaretListener{
-
-		@Override
-		public void caretUpdate(CaretEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-		
-		
+		textFieldName.addCaretListener(new nameListener(btnCreate));
 		
 		
 	}
+	
+
 	
 }
