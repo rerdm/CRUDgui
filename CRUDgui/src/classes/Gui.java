@@ -106,7 +106,7 @@ public class CRUD extends JFrame {
 
 		lblName = new JLabel(" Name :");
 		lblLastName = new JLabel(" Last Name :");
-		lblEmail = new JLabel(" Email :");
+		lblEmail = new JLabel("  Email :");
 
 		btnCreate = new JButton("CREATE");
 		btnCreate.setEnabled(false);

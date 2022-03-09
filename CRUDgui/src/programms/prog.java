@@ -2,13 +2,13 @@ package programms;
 
 import javax.swing.JFrame;
 
-import classes.CRUD;
+import classes.Gui;
 
 public class prog {
 	
 	public static void main(String[] args) {
 		
-		JFrame frame = new CRUD();
+		JFrame frame = new Gui();
 		frame.setVisible(true);
 		
 	}
