@@ -5,11 +5,11 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
-public class onDelateBtnListner implements ActionListener{
+public class OnDelateBtnListner implements ActionListener{
 	
 	private JButton button;
 
-	public onDelateBtnListner(JButton button) {
+	public OnDelateBtnListner(JButton button) {
 		
 		this.button = button;
 	}

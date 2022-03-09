@@ -31,7 +31,7 @@ import javax.swing.border.Border;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 
-public class CRUD extends JFrame {
+public class Gui extends JFrame {
 
 	private JLabel lblHeader;
 	private JTable table;
@@ -44,7 +44,7 @@ public class CRUD extends JFrame {
 
 	private static final int lenOfInputChars = 10;
 
-	public CRUD() {
+	public Gui() {
 
 		setTitle("CRUD GUI");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -128,13 +128,15 @@ public class CRUD extends JFrame {
 
 	private void configureInterfaces() {
 
-		btnCreate.addActionListener(new onCreateBtnListener(btnCreate));
-		btnSelect.addActionListener(new onSelectBtnListener(btnSelect));
-		btnUpdate.addActionListener(new onUpdateBtnListener(btnUpdate));
-		btnDelate.addActionListener(new onDelateBtnListner(btnDelate));
+		btnCreate.addActionListener(new OnCreateBtnListener(btnCreate));
+		btnSelect.addActionListener(new OnSelectBtnListener(btnSelect));
+		btnUpdate.addActionListener(new OnUpdateBtnListener(btnUpdate));
+		btnDelate.addActionListener(new OnDelateBtnListner(btnDelate));
 
 		textFieldName.addCaretListener(new nameListener(btnCreate));
 
 	}
+	
+	
 
 }

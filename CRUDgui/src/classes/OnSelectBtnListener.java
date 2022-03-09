@@ -5,11 +5,11 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
-public class onSelectBtnListener implements ActionListener{
+public class OnSelectBtnListener implements ActionListener{
 
 	private JButton button;
 
-	public onSelectBtnListener(JButton button) {
+	public OnSelectBtnListener(JButton button) {
 		
 		this.button = button;
 	}
