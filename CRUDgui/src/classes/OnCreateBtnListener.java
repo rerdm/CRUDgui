@@ -18,17 +18,17 @@ public class OnCreateBtnListener implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 
 		System.out.println("Create pressed ");
+//		
+//		CreateReadUpdateDelate db = new CreateReadUpdateDelate();
+//		db.connectToDatabase();
 		
-		CreateReadUpdateDelate db = new CreateReadUpdateDelate();
-		db.connectToDatabase();
-		
-		try {
-			db.readActualTableContent();
-		} catch (SQLException e1) {
-		
-			e1.printStackTrace();
-		}
-		
+//		try {
+//			db.readActualTableContent();
+//		} catch (SQLException e1) {
+//		
+//			e1.printStackTrace();
+//		}
+//				
 
 	}
 
