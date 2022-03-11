@@ -54,11 +54,8 @@ public class CrudCui extends JFrame {
 	private String user = "root";
 	private String password = "";
 	
-	
-
 	private Connection conn;
 	private String headerItens, lineItems;
-	
 	private int lenOfTableTtems;
 
 	private String name;
@@ -66,8 +63,7 @@ public class CrudCui extends JFrame {
 	private String email;
 	
 	private String selectedId;
-	
-	private int currentLengthOfTable;
+
 
 	public CrudCui() {
 
@@ -145,12 +141,9 @@ public class CrudCui extends JFrame {
 		lblEmail = new JLabel("  Email :");
 
 		btnCreate = new JButton("CREATE");
-		//btnCreate.setEnabled(false);
 		btnSelect = new JButton("SELECT");
-		
 		btnUpdate = new JButton("UPDATE");
-		//btnUpdate.setEnabled(false);
-		
+
 		btnDelate = new JButton("DELETE");
 		btnDelate.setEnabled(false);
 		
@@ -173,7 +166,6 @@ public class CrudCui extends JFrame {
 		btnSelect.addActionListener(new OnSelectBtn());
 		btnUpdate.addActionListener(new OnUpdateBtn());
 		btnDelate.addActionListener(new OnDelateBtn());
-
 		textFieldName.addCaretListener(new nameListener(btnCreate));
 
 	}
@@ -185,74 +177,56 @@ public class CrudCui extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 
 			System.out.println("select row ");
-//			System.out.println("Selected Column :"+table.getSelectedColumn());
-//			System.out.println("Selected Row    :"+table.getSelectedRow());
-			
 			int selectedRow = table.getSelectedRow();
 
-			//selectedId = selectedRow;
+			textFieldName.setText((String) table.getValueAt(selectedRow, 1));
+			textFieldLastName.setText((String) table.getValueAt(selectedRow, 2));
+			textFieldEmail.setText((String) table.getValueAt(selectedRow, 3));
 
-			textFieldName.setText((String) table.getValueAt(selectedRow,1));
-			textFieldLastName.setText((String) table.getValueAt(selectedRow,2));
-			textFieldEmail.setText((String) table.getValueAt(selectedRow,3));
-			
-			table.getValueAt(selectedRow,0);
-			
-			
-			
-			name = (String) table.getValueAt(selectedRow,1);
-			lastName = (String) table.getValueAt(selectedRow,2);
-			email = (String) table.getValueAt(selectedRow,3);
-			
-			
-			selectedId = (String) table.getValueAt(selectedRow,0);
-			
-			System.out.println("ID       : "+selectedId);
-			System.out.println("name     : "+name);
-			System.out.println("lastname : "+lastName);
-			System.out.println("lastname : "+email);
-			
+			name = (String) table.getValueAt(selectedRow, 1);
+			lastName = (String) table.getValueAt(selectedRow, 2);
+			email = (String) table.getValueAt(selectedRow, 3);
+
+			selectedId = (String) table.getValueAt(selectedRow, 0);
+
+			System.out.println("ID       : " + selectedId);
+			System.out.println("name     : " + name);
+			System.out.println("lastname : " + lastName);
+			System.out.println("lastname : " + email);
+
 			System.out.print("\n");
-			
-			
-			btnDelate.setEnabled(true);
-			}
 
-		
+			btnDelate.setEnabled(true);
+		}
 
 	}
-	
-	
-	
-	
-	
+
 	private class OnCreateBtn implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			
+
 			name = textFieldName.getText();
 			lastName = textFieldLastName.getText();
 			email = textFieldEmail.getText();
 
 			System.out.println("Create pressed ");
-			
+
 			CreateReadUpdateDelate db = new CreateReadUpdateDelate();
 			db.connectToDatabase();
-			
+
 			try {
 				db.insertItemsInTable();
 			} catch (SQLException e1) {
-				
+
 				e1.printStackTrace();
 			}
-			
+
 			try {
 				db.readActualTableContent();
 			} catch (SQLException e2) {
 				e2.printStackTrace();
 			}
-			
 
 		}
 
@@ -313,10 +287,9 @@ public class CrudCui extends JFrame {
 	}
 	
 	private class CreateReadUpdateDelate {
-		
+
 		private int headerLines;
 		private int tableContentLines;
-		
 
 		public void connectToDatabase() {
 
@@ -333,7 +306,7 @@ public class CrudCui extends JFrame {
 
 		public void readActualTableContent() throws SQLException {
 
-			String query = "SELECT * FROM "+talbeName+" ORDER BY id ASC";
+			String query = "SELECT * FROM " + talbeName + " ORDER BY id ASC";
 			java.sql.Statement statement = conn.createStatement();
 			ResultSet resultSet = statement.executeQuery(query);
 
@@ -375,57 +348,49 @@ public class CrudCui extends JFrame {
 
 		public void insertItemsInTable() throws SQLException {
 
-			String query = "INSERT INTO `"+talbeName+"` (`id`, `name`, `nachname`, `email`) VALUES (NULL, '"+name+"', '"+lastName+"', '"+email+"')";
+			String query = "INSERT INTO `" + talbeName + "` (`id`, `name`, `nachname`, `email`) VALUES (NULL, '" + name
+					+ "', '" + lastName + "', '" + email + "')";
+
+			dbOutput.setText(query);
 			
 			java.sql.Statement statement = conn.createStatement();
 			statement.execute(query);
 			statement.close();
-		
+
 		}
-		
+
 		public void updateTableItems() throws SQLException {
 
 			String currentName = textFieldName.getText();
 			String currentLastName = textFieldLastName.getText();
 			String currentEmail = textFieldEmail.getText();
-				
-			//UPDATE `test_db` SET `name` = 'Rene555888', `nachname` = 'Erdmann555888', `email` = 'mail.de558885' WHERE `test_db`.`id` = 1;
-			String query = "UPDATE `"+talbeName+"` SET `name` = '"+currentName+"', `nachname` = '"+currentLastName+"', `email` = '"+currentEmail+"' WHERE `"+talbeName+"`.`id` = "+selectedId;
-			
-			System.out.println(query);
-			
-			dbOutput.setText(query);
-			
-			java.sql.Statement statement = conn.createStatement();
-			statement.execute(query);
-			statement.close();
-			
-			
-	
-			
-		}
-		
-		public void delateTableItems() throws SQLException {
-			
 
-			String query = "DELETE FROM `"+talbeName+"` WHERE `"+talbeName+"`.`id` = "+selectedId;
-			
-			System.out.println(query);
-			
+			String query = "UPDATE `" + talbeName + "` SET `name` = '" + currentName + "', `nachname` = '"
+					+ currentLastName + "', `email` = '" + currentEmail + "' WHERE `" + talbeName + "`.`id` = "
+					+ selectedId;
+
 			dbOutput.setText(query);
-			
+
 			java.sql.Statement statement = conn.createStatement();
 			statement.execute(query);
 			statement.close();
-			
-			btnDelate.setEnabled(false);
-	
-			
+
 		}
-		
-		
-		
-		
+
+		public void delateTableItems() throws SQLException {
+
+			String query = "DELETE FROM `" + talbeName + "` WHERE `" + talbeName + "`.`id` = " + selectedId;
+
+			dbOutput.setText(query);
+
+			java.sql.Statement statement = conn.createStatement();
+			statement.execute(query);
+			statement.close();
+
+			btnDelate.setEnabled(false);
+
+		}
+
 	}
 
 }
