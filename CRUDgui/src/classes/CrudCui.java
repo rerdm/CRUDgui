@@ -35,7 +35,7 @@ import javax.swing.event.CaretListener;
 
 import com.mysql.cj.xdevapi.Statement;
 
-public class Gui extends JFrame {
+public class CrudCui extends JFrame {
 
 	private JLabel lblHeader;
 	private JTable table;
@@ -62,7 +62,7 @@ public class Gui extends JFrame {
 	private String lastName;
 	private String email;
 
-	public Gui() {
+	public CrudCui() {
 
 		setTitle("CRUD GUI");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
