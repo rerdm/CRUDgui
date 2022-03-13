@@ -177,6 +177,7 @@ public class CrudCui extends JFrame {
 		btnSelect.addActionListener(new OnSelectBtn());
 		btnUpdate.addActionListener(new OnUpdateBtn());
 		btnDelate.addActionListener(new OnDelateBtn());
+		
 		textFieldName.addCaretListener(new nameListener(btnCreate));
 
 	}
@@ -302,6 +303,32 @@ public class CrudCui extends JFrame {
 				e2.printStackTrace();
 			}
 
+		}
+
+	}
+	
+	public class nameListener implements CaretListener{
+		
+		
+		private JButton button;
+		
+		public nameListener(JButton button) {
+			
+			this.button = button;
+			
+		}
+		
+		@Override
+		public void caretUpdate(CaretEvent e) {
+			
+			JTextField field =(JTextField)e.getSource();
+			String nameFiledtext = field.getText();
+
+			button.setEnabled(!nameFiledtext.trim().isEmpty());
+			
+		
+			
+			
 		}
 
 	}
