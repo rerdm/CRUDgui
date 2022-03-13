@@ -32,6 +32,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
+import javax.swing.table.DefaultTableModel;
 
 import com.mysql.cj.xdevapi.Statement;
 
@@ -39,31 +40,41 @@ public class CrudCui extends JFrame {
 
 	private JLabel lblHeader;
 	private JTable table;
+	private static int numberOfTableRows = 100;
+	private static int numberOfTableColumns = 4;
+
 	private JButton btnCreate, btnSelect, btnUpdate, btnDelate;
 	private JLabel lblName, lblLastName, lblEmail;
+
 	private JTextField textFieldName, textFieldLastName, textFieldEmail;
+	private static final int lenOfInputChars = 10;
+
 	private JTextArea dbOutput;
 	private JScrollPane scrollTable;
-	private JPanel leftPanel, pnlAdd, pnlButtons;
+	private JPanel leftPanel, pnlAdd;
 
-	private static final int lenOfInputChars = 10;
-	
+	// MySql config
 	private String dbName = "users";
 	private String talbeName = "test_db";
-	private String url = "jdbc:mysql://localhost/"+dbName;
+	private String url = "jdbc:mysql://localhost/" + dbName;
 	private String user = "root";
 	private String password = "";
-	
+
+	private String firstDbHeaderElement = "name";
+	private String secondDbHeaderElement = "lastName";
+	private String thirdDbHeaderElement = "email";
+
 	private Connection conn;
+
 	private String headerItens, lineItems;
 	private int lenOfTableTtems;
+	private int clearTableFromLine;
 
 	private String name;
 	private String lastName;
 	private String email;
-	
-	private String selectedId;
 
+	private String selectedId;
 
 	public CrudCui() {
 
@@ -77,7 +88,7 @@ public class CrudCui extends JFrame {
 		setLocation(200, 200);
 
 		configureInterfaces();
-		
+
 		CreateReadUpdateDelate db = new CreateReadUpdateDelate();
 		db.connectToDatabase();
 
@@ -86,8 +97,7 @@ public class CrudCui extends JFrame {
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
-		
-		
+
 	}
 
 	private void addWidgets() {
@@ -98,7 +108,6 @@ public class CrudCui extends JFrame {
 		getContentPane().add(BorderLayout.PAGE_END, dbOutput);
 		getContentPane().add(BorderLayout.WEST, leftPanel);
 
-		// will be set in box-layout container
 		pnlAdd.add(lblName);
 		pnlAdd.add(textFieldName);
 		pnlAdd.add(lblLastName);
@@ -133,7 +142,8 @@ public class CrudCui extends JFrame {
 		Border border = BorderFactory.createLineBorder(Color.BLACK);
 		dbOutput.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(10, 10, 10, 10)));
 
-		table = new JTable(100, 4);
+		table = new JTable(numberOfTableRows, numberOfTableColumns);
+
 		scrollTable = new JScrollPane(table);
 
 		lblName = new JLabel(" Name :");
@@ -146,11 +156,10 @@ public class CrudCui extends JFrame {
 
 		btnDelate = new JButton("DELETE");
 		btnDelate.setEnabled(false);
-		
 
-		textFieldName = new JTextField(lenOfInputChars);
-		textFieldLastName = new JTextField(lenOfInputChars);
-		textFieldEmail = new JTextField(lenOfInputChars);
+		textFieldName = new JTextField(" Name ",lenOfInputChars);
+		textFieldLastName = new JTextField(" LastName ",lenOfInputChars);
+		textFieldEmail = new JTextField(" email ",lenOfInputChars);
 
 		pnlAdd = new JPanel();
 		pnlAdd.setLayout(new GridLayout(0, 2, 10, 10));
@@ -169,12 +178,12 @@ public class CrudCui extends JFrame {
 		textFieldName.addCaretListener(new nameListener(btnCreate));
 
 	}
-	
-	
+
 	private class OnSelectBtn implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			
 
 			System.out.println("select row ");
 			int selectedRow = table.getSelectedRow();
@@ -197,6 +206,7 @@ public class CrudCui extends JFrame {
 			System.out.print("\n");
 
 			btnDelate.setEnabled(true);
+
 		}
 
 	}
@@ -231,24 +241,24 @@ public class CrudCui extends JFrame {
 		}
 
 	}
-	
+
 	private class OnUpdateBtn implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
 			System.out.println("Update pressed ");
-			
+
 			CreateReadUpdateDelate db = new CreateReadUpdateDelate();
 			db.connectToDatabase();
-			
+
 			try {
 				db.updateTableItems();
 			} catch (SQLException e1) {
-				
+
 				e1.printStackTrace();
 			}
-			
+
 			try {
 				db.readActualTableContent();
 			} catch (SQLException e2) {
@@ -258,24 +268,24 @@ public class CrudCui extends JFrame {
 		}
 
 	}
-	
+
 	private class OnDelateBtn implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
 			System.out.println("Delate pressed ");
-			
+
 			CreateReadUpdateDelate db = new CreateReadUpdateDelate();
 			db.connectToDatabase();
-			
+
 			try {
 				db.delateTableItems();
 			} catch (SQLException e1) {
-				
+
 				e1.printStackTrace();
 			}
-			
+
 			try {
 				db.readActualTableContent();
 			} catch (SQLException e2) {
@@ -285,11 +295,12 @@ public class CrudCui extends JFrame {
 		}
 
 	}
-	
+
 	private class CreateReadUpdateDelate {
 
 		private int headerLines;
 		private int tableContentLines;
+		private int delateTableRowsFromThisLine;
 
 		public void connectToDatabase() {
 
@@ -305,6 +316,11 @@ public class CrudCui extends JFrame {
 		}
 
 		public void readActualTableContent() throws SQLException {
+			
+			System.out.println();
+			
+			System.out.println("Actual Items from table :"+talbeName+" from :"+dbName+" Database");
+
 
 			String query = "SELECT * FROM " + talbeName + " ORDER BY id ASC";
 			java.sql.Statement statement = conn.createStatement();
@@ -322,7 +338,6 @@ public class CrudCui extends JFrame {
 
 			lenOfTableTtems = headerLines - 1;
 			System.out.println();
-			System.out.println("Len of Header :" + lenOfTableTtems);
 			System.out.println("###############################################################################");
 
 			while (resultSet.next()) {
@@ -331,9 +346,7 @@ public class CrudCui extends JFrame {
 
 				for (int i = 1; i <= colum; i++) {
 
-					// debugging
 					System.out.print(String.format("%-25s", resultSet.getString(i)));
-
 					lineItems = resultSet.getString(i);
 					table.setValueAt(lineItems, tableContentLines, i - 1);
 
@@ -342,17 +355,35 @@ public class CrudCui extends JFrame {
 				System.out.println();
 
 			}
+
+			clearTableFromLine = tableContentLines + 1;
+
+			// For loop to sync the the content of the Table 
+			// In case some items is deleted so sync the JTable with the actual content of the databalse
+			
+			for (clearTableFromLine = tableContentLines + 1; clearTableFromLine <= numberOfTableRows
+					- 1; clearTableFromLine++) {
+
+				for (int i = 0; i < lenOfTableTtems; i++) {
+
+					table.setValueAt(" ", clearTableFromLine, i);
+
+				}
+
+			}
+
 			statement.close();
 			resultSet.close();
 		}
 
 		public void insertItemsInTable() throws SQLException {
 
-			String query = "INSERT INTO `" + talbeName + "` (`id`, `name`, `nachname`, `email`) VALUES (NULL, '" + name
-					+ "', '" + lastName + "', '" + email + "')";
+			String query = "INSERT INTO `" + talbeName + "` (`id`, `" + firstDbHeaderElement + "`, `"
+					+ secondDbHeaderElement + "`, `" + thirdDbHeaderElement + "`) VALUES (NULL, '" + name + "', '"
+					+ lastName + "', '" + email + "')";
 
 			dbOutput.setText(query);
-			
+
 			java.sql.Statement statement = conn.createStatement();
 			statement.execute(query);
 			statement.close();
@@ -365,9 +396,9 @@ public class CrudCui extends JFrame {
 			String currentLastName = textFieldLastName.getText();
 			String currentEmail = textFieldEmail.getText();
 
-			String query = "UPDATE `" + talbeName + "` SET `name` = '" + currentName + "', `nachname` = '"
-					+ currentLastName + "', `email` = '" + currentEmail + "' WHERE `" + talbeName + "`.`id` = "
-					+ selectedId;
+			String query = "UPDATE `" + talbeName + "` SET `" + firstDbHeaderElement + "` = '" + currentName + "', `"
+					+ secondDbHeaderElement + "` = '" + currentLastName + "', `" + thirdDbHeaderElement + "` = '"
+					+ currentEmail + "' WHERE `" + talbeName + "`.`id` = " + selectedId;
 
 			dbOutput.setText(query);
 
