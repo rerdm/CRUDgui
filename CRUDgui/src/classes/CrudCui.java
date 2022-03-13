@@ -38,6 +38,7 @@ import com.mysql.cj.xdevapi.Statement;
 
 public class CrudCui extends JFrame {
 
+	// verion 1
 	private JLabel lblHeader;
 	private JTable table;
 	private static int numberOfTableRows = 100;
@@ -75,6 +76,7 @@ public class CrudCui extends JFrame {
 	private String email;
 
 	private String selectedId;
+	
 
 	public CrudCui() {
 
@@ -308,7 +310,6 @@ public class CrudCui extends JFrame {
 
 		private int headerLines;
 		private int tableContentLines;
-		private int delateTableRowsFromThisLine;
 
 		public void connectToDatabase() {
 
