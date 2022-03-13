@@ -427,6 +427,8 @@ public class CrudCui extends JFrame {
 			statement.close();
 
 			btnDelate.setEnabled(false);
+			
+			
 
 		}
 
