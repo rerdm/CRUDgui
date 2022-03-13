@@ -137,7 +137,7 @@ public class CrudCui extends JFrame {
 		lblHeader.setHorizontalAlignment(SwingConstants.CENTER);
 
 		dbOutput = new JTextArea();
-		dbOutput.setPreferredSize(new Dimension(0, 60));
+		dbOutput.setPreferredSize(new Dimension(0, 100));
 
 		Border border = BorderFactory.createLineBorder(Color.BLACK);
 		dbOutput.setBorder(BorderFactory.createCompoundBorder(border, BorderFactory.createEmptyBorder(10, 10, 10, 10)));
@@ -201,10 +201,19 @@ public class CrudCui extends JFrame {
 			System.out.println("ID       : " + selectedId);
 			System.out.println("name     : " + name);
 			System.out.println("lastname : " + lastName);
-			System.out.println("lastname : " + email);
+			System.out.println("email    : " + email);
 
 			System.out.print("\n");
 
+			
+			dbOutput.setText("SELECT Line: \n "
+					+ "     ID  : " + selectedId +"\n"
+					+ "     name : " + name +"\n"
+					+ "     lastname : " + lastName +"\n"
+					+ "     email : " + email);
+			
+			
+			
 			btnDelate.setEnabled(true);
 
 		}
