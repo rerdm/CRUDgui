@@ -414,7 +414,6 @@ public class CrudCui extends JFrame {
 			statement.execute(query);
 			statement.close();
 
-			
 		}
 
 		public void delateTableItems() throws SQLException {
