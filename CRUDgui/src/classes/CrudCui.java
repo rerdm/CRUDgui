@@ -212,8 +212,7 @@ public class CrudCui extends JFrame {
 					+ "     lastname : " + lastName +"\n"
 					+ "     email : " + email);
 			
-			
-			
+
 			btnDelate.setEnabled(true);
 
 		}
