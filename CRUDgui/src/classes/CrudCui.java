@@ -416,6 +416,7 @@ public class CrudCui extends JFrame {
 
 		}
 
+		
 		public void delateTableItems() throws SQLException {
 
 			String query = "DELETE FROM `" + talbeName + "` WHERE `" + talbeName + "`.`id` = " + selectedId;
