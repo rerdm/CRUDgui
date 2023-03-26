@@ -1,10 +1,10 @@
-# GRUDgui
+# CRUDgui
 
 ## Describtion and usage
 
-With this programm you can manipulate a Sql Databese running on Xamp testserver with CRUD functinality.
-(All changes will be shown in the JTable but will also synchronized)
-<br> CREATE - READ(SELECT) - UPDATE - DELATE
+With this program you can manipulate a Sql Databese running on Xamp testserver with CRUD functinality.
+(All changes will be shown in the JTable but will also synchronized with the database)
+<br> CREATE - READ(SELECT) - UPDATE - DELETE
 
 <ul>
   <li>
@@ -28,7 +28,7 @@ With this programm you can manipulate a Sql Databese running on Xamp testserver 
   <li>
     <strong>DELETE</strong><br>
     To use delete functionality you heave to select a item first (Select button). 
-    Than you can click the DELATE button to delete the selected line.<br>
+    Than you can click the DELETE button to delete the selected line.<br>
   </li>
   
 <ul>
